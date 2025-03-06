@@ -159,7 +159,7 @@ def test_semchunk() -> None:
     assert error_raised
     
     # Test using `tiktoken` tokenizers, encodings and a `transformers` tokenizer by name with `chunkerify()`.
-    for name in ['cl100k_base', 'gpt-4', 'isaacus/emubert']:
+    for name in ['cl100k_base', 'gpt-4', 'isaacus/kanon-tokenizer']:
         chunker = semchunk.chunkerify(name, 1)
         chunker(DETERMINISTIC_TEST_INPUT)
         if TEST_OFFSETS: chunker(DETERMINISTIC_TEST_INPUT, offsets = True)
@@ -175,7 +175,7 @@ def test_semchunk() -> None:
     assert error_raised
     
     # Test using a `transformers` tokenizer directly.
-    tokenizer = AutoTokenizer.from_pretrained('isaacus/emubert')
+    tokenizer = AutoTokenizer.from_pretrained('isaacus/kanon-tokenizer')
     chunker = semchunk.chunkerify(tokenizer, 1)
     
     # Test using a `tiktoken` tokenizer directly.

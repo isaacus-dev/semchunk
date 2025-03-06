@@ -37,7 +37,7 @@ def initialize_test_token_counters() -> dict[str, Callable[[str], int]]:
     """Initialize `tiktoken`, `transformers`, character and word token counters for testing purposes."""
     
     gpt4_tiktoken_tokenizer = tiktoken.encoding_for_model('gpt-4').encode
-    emubert_transformers_tokenizer = make_transformers_tokenizer(transformers.AutoTokenizer.from_pretrained('isaacus/emubert'))
+    emubert_transformers_tokenizer = make_transformers_tokenizer(transformers.AutoTokenizer.from_pretrained('isaacus/kanon-tokenizer'))
     
     def word_tokenizer(text: str) -> list[str]:
         """Tokenize a text into words."""

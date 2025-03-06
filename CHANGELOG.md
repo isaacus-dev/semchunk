@@ -1,6 +1,10 @@
 ## Changelog 🔄
 All notable changes to `semchunk` will be documented here. This project adheres to [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.1.2] - 2025-03-06
+### Changed
+- Changed test model from `isaacus/emubert` to `isaacus/kanon-tokenizer`.
+
 ## [3.1.1] - 2025-02-18
 ### Added
 - Added a note to the quickstart section of the README advising users to deduct the number of special tokens automatically added by their tokenizer from their chunk size. This note had been removed in version 3.0.0 but has been readded as it is unlikely to be obvious to users.
