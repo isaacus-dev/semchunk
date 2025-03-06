@@ -137,6 +137,7 @@ All notable changes to `semchunk` will be documented here. This project adheres 
 ### Added
 - Added the `chunk()` function, which splits text into semantically meaningful chunks of a specified size as determined by a provided token counter.
 
+[3.1.2]: https://github.com/isaacus-dev/semchunk/compare/v3.1.1...v3.1.2
 [3.1.1]: https://github.com/isaacus-dev/semchunk/compare/v3.1.0...v3.1.1
 [3.1.0]: https://github.com/isaacus-dev/semchunk/compare/v3.0.4...v3.1.0
 [3.0.4]: https://github.com/isaacus-dev/semchunk/compare/v3.0.3...v3.0.4
