@@ -5,7 +5,7 @@
 
 </div>
 
-`semchunk` is a fast, lightweight and easy-to-use Python library for splitting text into semantically meaningful chunks.
+**`semchunk`** by [**Isaacus**](https://isaacus.com/) is a fast, lightweight and easy-to-use Python library for splitting text into semantically meaningful chunks.
 
 It has built-in support for tokenizers from OpenAI's `tiktoken` and Hugging Face's `transformers` and `tokenizers` libraries, in addition to supporting custom tokenizers and token counters. It can also overlap chunks as well as return their offsets.
 

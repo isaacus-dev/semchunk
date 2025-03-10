@@ -1,6 +1,10 @@
 ## Changelog 🔄
 All notable changes to `semchunk` will be documented here. This project adheres to [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.1.3] - 2025-03-10
+### Changed
+- Added mention of Isaacus to the README.
+
 ## [3.1.2] - 2025-03-06
 ### Changed
 - Changed test model from `isaacus/emubert` to `isaacus/kanon-tokenizer`.
@@ -137,6 +141,7 @@ All notable changes to `semchunk` will be documented here. This project adheres 
 ### Added
 - Added the `chunk()` function, which splits text into semantically meaningful chunks of a specified size as determined by a provided token counter.
 
+[3.1.3]: https://github.com/isaacus-dev/semchunk/compare/v3.1.2...v3.1.3
 [3.1.2]: https://github.com/isaacus-dev/semchunk/compare/v3.1.1...v3.1.2
 [3.1.1]: https://github.com/isaacus-dev/semchunk/compare/v3.1.0...v3.1.1
 [3.1.0]: https://github.com/isaacus-dev/semchunk/compare/v3.0.4...v3.1.0
