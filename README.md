@@ -11,6 +11,8 @@ It has built-in support for tokenizers from OpenAI's `tiktoken` and Hugging Face
 
 Powered by an efficient yet highly accurate chunking algorithm ([How It Works 🔍](https://github.com/isaacus-dev/semchunk#how-it-works-)), `semchunk` produces chunks that are more semantically meaningful than regular token and recursive character chunkers like `langchain`'s `RecursiveCharacterTextSplitter`, while also being 85% faster than its closest alternative, `semantic-text-splitter` ([Benchmarks 📊](https://github.com/isaacus-dev/semchunk#benchmarks-)).
 
+`semchunk` is production ready, being used every day in the [Isaacus API](https://docs.isaacus.com) to split extremely long legal documents into more manageable chunks for our [Kanon legal AI models](https://docs.isaacus.com/models).
+
 ## Installation 📦
 `semchunk` can be installed with `pip`:
 ```bash
