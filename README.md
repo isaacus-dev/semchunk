@@ -141,7 +141,7 @@ This function returns a list of chunks up to `chunk_size`-tokens-long, with any 
 To ensure that chunks are as semantically meaningful as possible, `semchunk` uses the following splitters, in order of precedence:
 1. The largest sequence of newlines (`\n`) and/or carriage returns (`\r`);
 1. The largest sequence of tabs;
-1. The largest sequence of whitespace characters (as defined by regex's `\s` character class);
+1. The largest sequence of whitespace characters (as defined by regex's `\s` character class) or, since version 3.2.0, if the largest sequence of whitespace characters is only a single character and there exist whitespace characters preceded by any of the semantically meaningful non-whitespace characters listed below (in the same order of precedence), then only those specific whitespace characters;
 1. Sentence terminators (`.`, `?`, `!` and `*`);
 1. Clause separators (`;`, `,`, `(`, `)`, `[`, `]`, `“`, `”`, `‘`, `’`, `'`, `"` and `` ` ``);
 1. Sentence interrupters (`:`, `—` and `…`);
