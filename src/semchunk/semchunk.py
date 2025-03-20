@@ -471,6 +471,52 @@ def chunkerify(
                 "Your desired chunk size was not passed to `semchunk.chunkerify` and the provided tokenizer either lacks an attribute named 'model_max_length' or that attribute is not an integer. Either specify a chunk size or provide a tokenizer that has a 'model_max_length' attribute that is an integer."
             )
 
+
+    # PROPOSAL 1: Warning-only approach - Warns the user but allows processing to continue if chunk_size exceeds model's limit
+    # if hasattr(tokenizer_or_token_counter, "model_max_length"):
+    #     model_max = tokenizer_or_token_counter.model_max_length
+    #     # Adjust model_max by subtracting special token overhead if possible
+    #     if hasattr(tokenizer_or_token_counter, "encode"):
+    #         with suppress(Exception):
+    #             model_max -= len(tokenizer_or_token_counter.encode(""))
+    #     # Issue warning if chunk_size exceeds adjusted model maximum
+    #     if chunk_size > model_max:
+    #         import warnings
+    #         warnings.warn(
+    #             f"Specified chunk_size ({chunk_size}) exceeds model's maximum sequence length ({model_max}). "
+    #             "This may result in truncation or indexing errors."
+    #         )
+
+    # PROPOSAL 2: Error-raising approach - Prevents processing entirely if chunk_size exceeds model's limit
+    # if hasattr(tokenizer_or_token_counter, "model_max_length"):
+    #     model_max = tokenizer_or_token_counter.model_max_length
+    #     # Adjust model_max by subtracting special token overhead if possible
+    #     if hasattr(tokenizer_or_token_counter, "encode"):
+    #         with suppress(Exception):
+    #             model_max -= len(tokenizer_or_token_counter.encode(""))
+    #     # Raise error if chunk_size exceeds adjusted model maximum
+    #     if chunk_size > model_max:
+    #         raise ValueError(
+    #             f"Specified chunk_size ({chunk_size}) exceeds model's maximum sequence length ({model_max}). "
+    #             f"Please specify a chunk_size <= {model_max}."
+    #         )
+
+    # PROPOSAL 3: Auto-capping approach - Automatically adjusts chunk_size to model's limit with warning
+    # if hasattr(tokenizer_or_token_counter, "model_max_length"):
+    #     model_max = tokenizer_or_token_counter.model_max_length
+    #     # Adjust model_max by subtracting special token overhead if possible
+    #     if hasattr(tokenizer_or_token_counter, "encode"):
+    #         with suppress(Exception):
+    #             model_max -= len(tokenizer_or_token_counter.encode(""))
+    #     # If chunk_size exceeds model maximum, cap it at model maximum and warn user
+    #     if chunk_size > model_max:
+    #         import warnings
+    #         warnings.warn(
+    #             f"Specified chunk_size ({chunk_size}) exceeds model's maximum sequence length ({model_max}). "
+    #             f"Using maximum allowed size of {model_max} instead."
+    #         )
+    #         chunk_size = model_max
+
     # If we have been given a tokenizer, construct a token counter from it.
     if hasattr(tokenizer_or_token_counter, "encode"):
         # Determine whether the tokenizer accepts the argument `add_special_tokens` and, if so, ensure that it is always disabled.
