@@ -61,7 +61,7 @@ assert chunker([text], progress = True) == [['The quick brown fox', 'jumps over 
 # setting `processes` to a number greater than 1.
 assert chunker([text], processes = 2) == [['The quick brown fox', 'jumps over the', 'lazy dog.']]
 
-# You can also pass a `offsets` argument to return the offsets of chunks, as well as an `overlap`
+# You can also pass an `offsets` argument to return the offsets of chunks, as well as an `overlap`
 # argument to overlap chunks by a ratio (if < 1) or an absolute number of tokens (if >= 1).
 chunks, offsets = chunker(text, offsets = True, overlap = 0.5)
 ```
@@ -85,7 +85,7 @@ def chunkerify(
 
 `chunk_size` is the maximum number of tokens a chunk may contain. It defaults to `None` in which case it will be set to the same value as the tokenizer's `model_max_length` attribute (deducted by the number of tokens returned by attempting to tokenize an empty string) if possible, otherwise a `ValueError` will be raised.
 
-`max_token_chars` is the maximum numbers of characters a token may contain. It is used to significantly speed up the token counting of long inputs. It defaults to `None` in which case it will either not be used or will, if possible, be set to the numbers of characters in the longest token in the tokenizer's vocabulary as determined by the `token_byte_values` or `get_vocab` methods.
+`max_token_chars` is the maximum number of characters a token may contain. It is used to significantly speed up the token counting of long inputs. It defaults to `None` in which case it will either not be used or will, if possible, be set to the number of characters in the longest token in the tokenizer's vocabulary as determined by the `token_byte_values` or `get_vocab` methods.
 
 `memoize` flags whether to memoize the token counter. It defaults to `True`.
 
