@@ -274,8 +274,8 @@ def chunk(
         else:
             chunks, offsets = [], []
 
-        # Overlap chunks if desired.
-        if overlap:
+        # Overlap chunks if desired and there are chunks to overlap.
+        if overlap and chunks:
             # Rename variables for clarity.
             subchunk_size = local_chunk_size
             subchunks = chunks

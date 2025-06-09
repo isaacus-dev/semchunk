@@ -1,6 +1,10 @@
 ## Changelog 🔄
 All notable changes to `semchunk` will be documented here. This project adheres to [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.2.2] - 2025-06-09
+### Fixed
+- Fixed `IndexError` being raised when chunking whitespace only texts with overlapping enabled ([#18](https://github.com/isaacus-dev/semchunk/issues/18)).
+
 ## [3.2.1] - 2025-03-27
 ### Fixed
 - Fixed minor typos in the README and docstrings.
@@ -149,6 +153,7 @@ All notable changes to `semchunk` will be documented here. This project adheres 
 ### Added
 - Added the `chunk()` function, which splits text into semantically meaningful chunks of a specified size as determined by a provided token counter.
 
+[3.2.2]: https://github.com/isaacus-dev/semchunk/compare/v3.2.1...v3.2.2
 [3.2.1]: https://github.com/isaacus-dev/semchunk/compare/v3.2.0...v3.2.1
 [3.2.0]: https://github.com/isaacus-dev/semchunk/compare/v3.1.3...v3.2.0
 [3.1.3]: https://github.com/isaacus-dev/semchunk/compare/v3.1.2...v3.1.3
