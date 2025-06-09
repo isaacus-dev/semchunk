@@ -31,7 +31,6 @@ In addition, [@dominictarro](https://github.com/dominictarro) maintains a Rust p
 ## Quickstart 👩‍💻
 The code snippet below demonstrates how to chunk text with `semchunk`:
 ```python
-
 import semchunk
 import tiktoken                        # `transformers` and `tiktoken` are not required.
 from transformers import AutoTokenizer # They're just here for demonstration purposes.
