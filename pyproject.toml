@@ -120,9 +120,13 @@ target-version = "py312"
 
 [dependency-groups]
 dev = [
+    "build>=1.2.2.post1",
+    "hatch>=1.14.1",
     "nltk>=3.9.1",
     "pytest>=8.4.0",
     "pytest-cov>=6.1.1",
+    "semantic-text-splitter>=0.27.0",
     "tiktoken>=0.9.0",
     "transformers>=4.52.4",
+    "twine>=6.1.0",
 ]
