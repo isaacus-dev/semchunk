@@ -1,6 +1,10 @@
 ## Changelog 🔄
 All notable changes to `semchunk` will be documented here. This project adheres to [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.2.3] - 2025-08-13
+### Fixed
+- Fixed broken Python download count shield ([crflynn/pypistats.org#82](https://github.com/crflynn/pypistats.org/issues/82#issue-3285911460)).
+
 ## [3.2.2] - 2025-06-09
 ### Fixed
 - Fixed `IndexError` being raised when chunking whitespace only texts with overlapping enabled ([#18](https://github.com/isaacus-dev/semchunk/issues/18)).
