@@ -5,9 +5,9 @@ import math
 import inspect
 
 from typing import Callable, Sequence, TYPE_CHECKING
+from functools import lru_cache
 from itertools import accumulate
 from contextlib import suppress
-from functools import lru_cache
 
 import mpire
 
