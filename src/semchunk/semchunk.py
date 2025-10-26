@@ -216,7 +216,7 @@ def chunk(
                 text=split,
                 chunk_size=local_chunk_size,
                 token_counter=token_counter,
-                offsets=return_offsets,
+                offsets=True,
                 _recursion_depth=_recursion_depth + 1,
                 _start=split_start,
             )
