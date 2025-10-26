@@ -1,6 +1,13 @@
 ## Changelog 🔄
 All notable changes to `semchunk` will be documented here. This project adheres to [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.2.4] - 2025-10-26
+### Fixed
+- Fixed splitters being sorted lexographically rather than by length, which should improve the meaningfulness of chunks.
+
+### Fixed
+- Fixed broken Python download count shield ([crflynn/pypistats.org#82](https://github.com/crflynn/pypistats.org/issues/82#issue-3285911460)).
+
 ## [3.2.3] - 2025-08-13
 ### Fixed
 - Fixed broken Python download count shield ([crflynn/pypistats.org#82](https://github.com/crflynn/pypistats.org/issues/82#issue-3285911460)).
