@@ -68,13 +68,13 @@ def _split_text(text: str) -> tuple[str, bool, list[str]]:
     # - The largest sequence of whitespace characters or, if the largest such sequence is only a single character and there exists a whitespace character preceded by a semantically meaningful non-whitespace splitter, then that whitespace character;
     # - A semantically meaningful non-whitespace splitter.
     if "\n" in text or "\r" in text:
-        splitter = max(re.findall(r"[\r\n]+", text))
+        splitter = max(re.findall(r"[\r\n]+", text), key=len)
 
     elif "\t" in text:
-        splitter = max(re.findall(r"\t+", text))
+        splitter = max(re.findall(r"\t+", text), key=len)
 
     elif re.search(r"\s", text):
-        splitter = max(re.findall(r"\s+", text))
+        splitter = max(re.findall(r"\s+", text), key=len)
         
         # If the splitter is only a single character, see if we can target whitespace characters that are preceded by semantically meaningful non-whitespace splitters to avoid splitting in the middle of sentences.
         if len(splitter) == 1:
