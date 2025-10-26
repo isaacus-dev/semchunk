@@ -122,6 +122,7 @@ target-version = "py312"
 dev = [
     "build>=1.2.2.post1",
     "hatch>=1.14.1",
+    "ipykernel>=6.31.0",
     "nltk>=3.9.1",
     "pytest>=8.4.0",
     "pytest-cov>=6.1.1",
