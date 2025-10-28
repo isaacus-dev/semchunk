@@ -1,7 +1,7 @@
 <div align='center'>
 
 # semchunk 🧩
-<a href="https://pypi.org/project/semchunk/" alt="PyPI Version"><img src="https://img.shields.io/pypi/v/semchunk"></a> <a href="https://github.com/isaacus-dev/semchunk/actions/workflows/ci.yml" alt="Build Status"><img src="https://img.shields.io/github/actions/workflow/status/isaacus-dev/semchunk/ci.yml?branch=main"></a> <a href="https://app.codecov.io/gh/isaacus-dev/semchunk" alt="Code Coverage"><img src="https://img.shields.io/codecov/c/github/isaacus-dev/semchunk"></a> <a href="https://pepy.tech/project/semchunk" alt="Downloads"><img src="https://pepy.tech/badge/semchunk/month"></a>
+<a href="https://pypi.org/project/semchunk/" alt="PyPI Version"><img src="https://img.shields.io/pypi/v/semchunk"></a> <a href="https://github.com/isaacus-dev/semchunk/actions/workflows/ci.yml" alt="Build Status"><img src="https://img.shields.io/github/actions/workflow/status/isaacus-dev/semchunk/ci.yml?branch=main"></a> <a href="https://app.codecov.io/gh/isaacus-dev/semchunk" alt="Code Coverage"><img src="https://img.shields.io/codecov/c/github/isaacus-dev/semchunk"></a> <a href="https://pypistats.org/packages/semchunk" alt="Monthly downloads"><img src="https://img.shields.io/pypi/dm/semchunk"></a>
 
 </div>
 

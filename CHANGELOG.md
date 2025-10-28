@@ -1,6 +1,10 @@
 ## Changelog 🔄
 All notable changes to `semchunk` will be documented here. This project adheres to [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.2.5] - 2025-10-28
+### Changed
+- Switched to more accurate monthly download counts from [pypistats.org](https://pypistats.org/) rather than the less accurate counts from [pepy.tech](https://pepy.tech/).
+
 ## [3.2.4] - 2025-10-26
 ### Fixed
 - Fixed splitters being sorted lexographically rather than by length, which should improve the meaningfulness of chunks.
@@ -164,6 +168,7 @@ All notable changes to `semchunk` will be documented here. This project adheres 
 ### Added
 - Added the `chunk()` function, which splits text into semantically meaningful chunks of a specified size as determined by a provided token counter.
 
+[3.2.5]: https://github.com/isaacus-dev/semchunk/compare/v3.2.4...v3.2.5
 [3.2.4]: https://github.com/isaacus-dev/semchunk/compare/v3.2.3...v3.2.4
 [3.2.3]: https://github.com/isaacus-dev/semchunk/compare/v3.2.2...v3.2.3
 [3.2.2]: https://github.com/isaacus-dev/semchunk/compare/v3.2.1...v3.2.2
