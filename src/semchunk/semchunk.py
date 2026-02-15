@@ -6,7 +6,7 @@ import inspect
 
 from bisect import bisect_left
 from typing import Callable, Sequence, TYPE_CHECKING
-from functools import lru_cache
+from functools import lru_cache, partial
 from itertools import accumulate
 from contextlib import suppress
 
@@ -402,6 +402,7 @@ def chunkerify(
     | Callable[[str], int],
     chunk_size: int | None = None,
     *,
+    tokenizer_kwargs: dict | None = None,
     max_token_chars: int | None = None,
     memoize: bool = True,
     cache_maxsize: int | None = None,
@@ -411,6 +412,7 @@ def chunkerify(
     Args:
         tokenizer_or_token_counter (str | tiktoken.Encoding | transformers.PreTrainedTokenizer | tokenizers.Tokenizer | Callable[[str], int]): Either: the name of a `tiktoken` or `transformers` tokenizer (with priority given to the former); a tokenizer that possesses an `encode` attribute (e.g., a `tiktoken`, `transformers` or `tokenizers` tokenizer); or a token counter that returns the number of tokens in a input.
         chunk_size (int, optional): The maximum number of tokens a chunk may contain. Defaults to `None` in which case it will be set to the same value as the tokenizer's `model_max_length` attribute (deducted by the number of tokens returned by attempting to tokenize an empty string) if possible otherwise a `ValueError` will be raised.
+        tokenizer_kwargs (dict, optional): A dictionary of keyword arguments to be passed to the tokenizer or token counter whenever it is called. This can be used to disable the current default behavior of treating any encountered special tokens as if they are normal text when using a `tiktoken` tokenzier.
         max_token_chars (int, optional): The maximum number of characters a token may contain. Used to significantly speed up the token counting of long inputs. Defaults to `None` in which case it will either not be used or will, if possible, be set to the number of characters in the longest token in the tokenizer's vocabulary as determined by the `token_byte_values` or `get_vocab` methods.
         memoize (bool, optional): Whether to memoize the token counter. Defaults to `True`.
         cache_maxsize (int, optional): The maximum number of text-token count pairs that can be stored in the token counter's cache. Defaults to `None`, which makes the cache unbounded. This argument is only used if `memoize` is `True`.
@@ -482,21 +484,38 @@ def chunkerify(
                 "Your desired chunk size was not passed to `semchunk.chunkerify` and the provided tokenizer either lacks an attribute named 'model_max_length' or that attribute is not an integer. Either specify a chunk size or provide a tokenizer that has a 'model_max_length' attribute that is an integer."
             )
 
-    # If we have been given a tokenizer, construct a token counter from it.
+    # If we have been given a tokenizer, construct a token counter from it, otherwise, assume we have been given a token counter directly.
     if hasattr(tokenizer_or_token_counter, "encode"):
-        # Determine whether the tokenizer accepts the argument `add_special_tokens` and, if so, ensure that it is always disabled.
-        if "add_special_tokens" in inspect.signature(tokenizer_or_token_counter.encode).parameters:
-
+        # If the tokenizer accepts keyword arguments allowing us to specify that special tokens should not be added and should be treated as normal text and those arguments are not already being disabled by `tokenizer_kwargs`, set them.
+        tokenizer_kwargs = dict(tokenizer_kwargs) if tokenizer_kwargs is not None else {}
+        
+        try:
+            tokenizer_parameters = inspect.signature(tokenizer_or_token_counter.encode).parameters
+        
+        except Exception:
+            tokenizer_parameters = {}
+        
+        for kwarg, value in {
+            "add_special_tokens": False,
+            "disallowed_special": (),
+        }.items():
+            if kwarg in tokenizer_parameters and kwarg not in tokenizer_kwargs:
+                tokenizer_kwargs[kwarg] = value
+        
+        if tokenizer_kwargs:
             def token_counter(text: str) -> int:
-                return len(tokenizer_or_token_counter.encode(text, add_special_tokens=False))
-
+                return len(tokenizer_or_token_counter.encode(text, **tokenizer_kwargs))
+        
         else:
-
             def token_counter(text: str) -> int:
                 return len(tokenizer_or_token_counter.encode(text))
-
+        
     else:
-        token_counter = tokenizer_or_token_counter
+        if tokenizer_kwargs:
+            token_counter = partial(tokenizer_or_token_counter, **tokenizer_kwargs)
+        
+        else:
+            token_counter = tokenizer_or_token_counter
 
     # If we know the number of characters in the longest token, construct a new token counter that uses that to avoid having to tokenize very long texts.
     if max_token_chars is not None:
