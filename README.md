@@ -109,13 +109,13 @@ The chunker accepts an `overlap` argument that specifies the proportion of the c
 def chunk(
     text: str,
     chunk_size: int,
+    token_counter: Callable[[str], int],
     *,
-    token_counter: Callable,
     memoize: bool = True,
     offsets: bool = False,
     overlap: float | int | None = None,
     cache_maxsize: int | None = None,
-) -> list[str]
+) -> list[str] | tuple[list[str], list[tuple[int, int]]]:
 ```
 
 `chunk()` splits a text into semantically meaningful chunks of a specified size as determined by the provided token counter.
