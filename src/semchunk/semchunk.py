@@ -171,6 +171,7 @@ def chunk(
     Returns:
         list[str] | tuple[list[str], list[tuple[int, int]]]: A list of chunks up to `chunk_size`-tokens-long, with any whitespace used to split the text removed, and, if `offsets` is `True`, a list of tuples of the form `(start, end)` where `start` is the index of the first character of the chunk in the original text and `end` is the index of the character after the last character of the chunk such that `chunks[i] == text[offsets[i][0]:offsets[i][1]]`."""
 
+    # region ### Initialization ###
     # Rename variables for clarity.
     return_offsets = offsets
     local_chunk_size = chunk_size
@@ -188,7 +189,9 @@ def chunk(
             if overlap:
                 unoverlapped_chunk_size = chunk_size - overlap
                 local_chunk_size = min(overlap, unoverlapped_chunk_size)
+    # endregion
 
+    # region ### Chunking ###
     # Split the text using the most semantically meaningful splitter possible.
     splitter, splitter_is_whitespace, splits = _split_text(text)
 
@@ -305,10 +308,10 @@ def chunk(
             return chunks, offsets
 
         return chunks
-
+    
     # Always return chunks and offsets if this is a recursive call.
     return chunks, offsets
-
+    # endregion
 
 class Chunker:
     def __init__(self, chunk_size: int, token_counter: Callable[[str], int]) -> None:
