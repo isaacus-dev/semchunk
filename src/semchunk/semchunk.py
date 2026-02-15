@@ -114,7 +114,14 @@ def bisect_left(sorted: list, target: int, low: int, high: int) -> int:
 
 
 def merge_splits(
-    splits: list[str], cum_lens: list[int], chunk_size: int, splitter: str, token_counter: Callable, start: int, high: int
+    text: str,
+    split_starts: Sequence[int],
+    splitter_len: int,
+    cum_lens: Sequence[int],
+    chunk_size: int,
+    token_counter: Callable[[str], int],
+    start: int,
+    high: int,
 ) -> tuple[int, str]:
     """Merge splits until a chunk size is reached, returning the index of the last split included in the merged chunk along with the merged chunk itself."""
 
@@ -128,7 +135,7 @@ def merge_splits(
         i = bisect_left(cum_lens, target, low=low, high=high)
         midpoint = min(i, high - 1)
 
-        tokens = token_counter(splitter.join(splits[start:midpoint]))
+        tokens = token_counter(text[split_starts[start] : split_starts[midpoint] - splitter_len])
 
         local_cum = cum_lens[midpoint] - offset
 
@@ -143,7 +150,7 @@ def merge_splits(
             low = midpoint + 1
 
     end = low - 1
-    return end, splitter.join(splits[start:end])
+    return end, (text[split_starts[start] : split_starts[end] - splitter_len])
 
 
 def chunk(
@@ -199,8 +206,8 @@ def chunk(
     splitter_len = len(splitter)
     split_lens = [len(split) for split in splits]
     cum_lens = list(accumulate(split_lens, initial=0))
-    split_starts = accumulate([0] + [split_len + splitter_len for split_len in split_lens])
-    split_starts = [start + _start for start in split_starts]
+    local_split_starts = list(accumulate([0] + [split_len + splitter_len for split_len in split_lens]))
+    split_starts = [start + _start for start in local_split_starts]
     num_splits_plus_one = len(splits) + 1
 
     chunks = []
@@ -231,10 +238,11 @@ def chunk(
         else:
             # Merge the split with subsequent splits until the chunk size is reached.
             final_split_in_chunk_i, new_chunk = merge_splits(
-                splits=splits,
+                text=text,
+                split_starts=local_split_starts,
+                splitter_len=splitter_len,
                 cum_lens=cum_lens,
                 chunk_size=local_chunk_size,
-                splitter=splitter,
                 token_counter=token_counter,
                 start=i,
                 high=num_splits_plus_one,
