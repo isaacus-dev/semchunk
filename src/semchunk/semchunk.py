@@ -164,10 +164,15 @@ def chunk(
 
     Args:
         text (str): The text to be chunked.
+        
         chunk_size (int): The maximum number of tokens a chunk may contain.
+        
         token_counter (Callable[[str], int]): A callable that takes a string and returns the number of tokens in it.
+        
         memoize (bool, optional): Whether to memoize the token counter. Defaults to `True`.
+        
         offsets (bool, optional): Whether to return the start and end offsets of each chunk. Defaults to `False`.
+        
         overlap (float | int | None, optional): The proportion of the chunk size, or, if >=1, the number of tokens, by which chunks should overlap. Defaults to `None`, in which case no overlapping occurs.
         cache_maxsize (int | None, optional): The maximum number of text-token count pairs that can be stored in the token counter's cache. Defaults to `None`, which makes the cache unbounded. This argument is only used if `memoize` is `True`.
 
@@ -360,9 +365,13 @@ class Chunker:
 
         Args:
             text_or_texts (str | Sequence[str]): The text or texts to be chunked.
+            
             processes (int, optional): The number of processes to use when chunking multiple texts. Defaults to `1` in which case chunking will occur in the main process.
+            
             progress (bool, optional): Whether to display a progress bar when chunking multiple texts. Defaults to `False`.
+            
             offsets (bool, optional): Whether to return the start and end offsets of each chunk. Defaults to `False`.
+            
             overlap (float | int | None, optional): The proportion of the chunk size, or, if >=1, the number of tokens, by which chunks should overlap. Defaults to `None`, in which case no overlapping occurs.
 
         Returns:
