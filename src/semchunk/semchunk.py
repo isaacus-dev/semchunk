@@ -118,7 +118,7 @@ def merge_splits(
     start: int,
     high: int,
 ) -> tuple[int, str]:
-    """Merge splits until a chunk size is reached, returning the index of the last split included in the merged chunk along with the merged chunk itself."""
+    """Merge splits until a chunk size is reached, returning the index of the first split not included in the merged chunk along with the merged chunk itself."""
 
     average = 0.2
     low = start
@@ -185,10 +185,10 @@ def chunk(
             token_counter = _memoized_token_counters.setdefault(token_counter, lru_cache(cache_maxsize)(token_counter))
 
         if overlap:
-            # Make relative overlaps absolute and floor both relative and absolute overlaps to prevent ever having an overlap >= chunk_size.
+            # Make relative overlaps absolute and floor both relative and absolute overlaps to prevent ever having an overlap over the chunk size.
             overlap = math.floor(chunk_size * overlap) if overlap < 1 else min(overlap, chunk_size - 1)
 
-            # If the overlap has not been zeroed, compute the effective chunk size as the minimum of the chunk size and the chunk size minus the overlap.
+            # If the overlap has not been zeroed, compute the effective chunk size as the minimum of the iverlap and the chunk size minus the overlap.
             if overlap:
                 unoverlapped_chunk_size = chunk_size - overlap
                 local_chunk_size = min(overlap, unoverlapped_chunk_size)
