@@ -72,6 +72,7 @@ def chunkerify(
     tokenizer_or_token_counter: str | tiktoken.Encoding | transformers.PreTrainedTokenizer | \
                                 tokenizers.Tokenizer | Callable[[str], int],
     chunk_size: int = None,
+    *,
     max_token_chars: int = None,
     memoize: bool = True,
     cache_maxsize: int | None = None,
@@ -105,6 +106,7 @@ The chunker accepts an `overlap` argument that specifies the proportion of the c
 def chunk(
     text: str,
     chunk_size: int,
+    *,
     token_counter: Callable,
     memoize: bool = True,
     offsets: bool = False,

@@ -152,6 +152,7 @@ def chunk(
     text: str,
     chunk_size: int,
     token_counter: Callable[[str], int],
+    *,
     memoize: bool = True,
     offsets: bool = False,
     overlap: float | int | None = None,
@@ -400,6 +401,7 @@ def chunkerify(
     | tokenizers.Tokenizer
     | Callable[[str], int],
     chunk_size: int | None = None,
+    *,
     max_token_chars: int | None = None,
     memoize: bool = True,
     cache_maxsize: int | None = None,
