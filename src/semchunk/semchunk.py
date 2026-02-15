@@ -201,7 +201,6 @@ def chunk(
     offsets: list = []
     splitter_len = len(splitter)
     split_lens = [len(split) for split in splits]
-    cum_lens = list(accumulate(split_lens, initial=0))
     local_split_starts = list(accumulate([0] + [split_len + splitter_len for split_len in split_lens]))
     split_starts = [start + _start for start in local_split_starts]
     num_splits_plus_one = len(splits) + 1
@@ -237,7 +236,7 @@ def chunk(
                 text=text,
                 split_starts=local_split_starts,
                 splitter_len=splitter_len,
-                cum_lens=cum_lens,
+                cum_lens=local_split_starts,
                 chunk_size=local_chunk_size,
                 token_counter=token_counter,
                 start=i,
