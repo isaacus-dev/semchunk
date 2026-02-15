@@ -116,7 +116,38 @@ exclude = [
     "logs",
 ]
 line-length = 120
+indent-width = 4
 target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I"]
+fixable = [
+    "ALL",
+]
+unfixable = []
+ignore = ["E741"]
+
+[tool.ruff.lint.isort]
+length-sort = true
+section-order = [
+    "future",
+    "standard-library",
+    "third-party",
+    "first-party",
+    "local-folder",
+]
+lines-between-types = 1
+order-by-type = false
+combine-as-imports = true
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["F401"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
 
 [dependency-groups]
 dev = [
