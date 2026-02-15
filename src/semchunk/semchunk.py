@@ -4,6 +4,7 @@ import re
 import math
 import inspect
 
+from bisect import bisect_left
 from typing import Callable, Sequence, TYPE_CHECKING
 from functools import lru_cache
 from itertools import accumulate
@@ -100,19 +101,6 @@ def _split_text(text: str) -> tuple[str, bool, list[str]]:
     return splitter, splitter_is_whitespace, text.split(splitter)
 
 
-def bisect_left(sorted: list, target: int, low: int, high: int) -> int:
-    while low < high:
-        mid = (low + high) // 2
-
-        if sorted[mid] < target:
-            low = mid + 1
-
-        else:
-            high = mid
-
-    return low
-
-
 def merge_splits(
     text: str,
     split_starts: Sequence[int],
@@ -132,7 +120,7 @@ def merge_splits(
     target = offset + (chunk_size * average)
 
     while low < high:
-        i = bisect_left(cum_lens, target, low=low, high=high)
+        i = bisect_left(cum_lens, target, lo=low, hi=high)
         midpoint = min(i, high - 1)
 
         tokens = token_counter(text[split_starts[start] : split_starts[midpoint] - splitter_len])
