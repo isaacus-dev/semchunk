@@ -56,7 +56,10 @@ _NON_WHITESPACE_SEMANTIC_SPLITTERS = (
 )
 """A tuple of semantically meaningful non-whitespace splitters that may be used to chunk texts, ordered from most desirable to least desirable."""
 
-_REGEX_ESCAPED_NON_WHITESPACE_SEMANTIC_SPLITTERS = tuple(re.escape(splitter) for splitter in _NON_WHITESPACE_SEMANTIC_SPLITTERS)
+_REGEX_ESCAPED_NON_WHITESPACE_SEMANTIC_SPLITTERS = tuple(
+    re.escape(splitter) for splitter in _NON_WHITESPACE_SEMANTIC_SPLITTERS
+)
+
 
 def _split_text(text: str) -> tuple[str, bool, list[str]]:
     """Split text using the most semantically meaningful splitter possible."""
@@ -76,15 +79,19 @@ def _split_text(text: str) -> tuple[str, bool, list[str]]:
 
     elif re.search(r"\s", text):
         splitter = max(re.findall(r"\s+", text), key=len)
-        
+
         # If the splitter is only a single character, see if we can target whitespace characters that are preceded by semantically meaningful non-whitespace splitters to avoid splitting in the middle of sentences.
         if len(splitter) == 1:
             for escaped_preceder in _REGEX_ESCAPED_NON_WHITESPACE_SEMANTIC_SPLITTERS:
-                if (whitespace_preceded_by_preceder := re.search(rf'{escaped_preceder}(\s)', text)):
+                if whitespace_preceded_by_preceder := re.search(rf"{escaped_preceder}(\s)", text):
                     splitter = whitespace_preceded_by_preceder.group(1)
                     escaped_splitter = re.escape(splitter)
-                    
-                    return splitter, splitter_is_whitespace, re.split(rf'(?<={escaped_preceder}){escaped_splitter}', text)
+
+                    return (
+                        splitter,
+                        splitter_is_whitespace,
+                        re.split(rf"(?<={escaped_preceder}){escaped_splitter}", text),
+                    )
 
     else:
         # Identify the most desirable semantically meaningful non-whitespace splitter present in the text.
@@ -264,12 +271,14 @@ def chunk(
     # If this is the first call, remove any empty chunks as well as chunks comprised entirely of whitespace and then overlap the chunks if desired and finally return the chunks, optionally with their offsets.
     if is_first_call:
         # Remove empty chunks.
-        chunks_and_offsets = [(chunk, offset) for chunk, offset in zip(chunks, offsets) if chunk and not chunk.isspace()]
-        
+        chunks_and_offsets = [
+            (chunk, offset) for chunk, offset in zip(chunks, offsets) if chunk and not chunk.isspace()
+        ]
+
         if chunks_and_offsets:
             chunks, offsets = zip(*chunks_and_offsets)
             chunks, offsets = list(chunks), list(offsets)
-        
+
         else:
             chunks, offsets = [], []
 
@@ -304,10 +313,11 @@ def chunk(
             return chunks, offsets
 
         return chunks
-    
+
     # Always return chunks and offsets if this is a recursive call.
     return chunks, offsets
     # endregion
+
 
 class Chunker:
     def __init__(self, chunk_size: int, token_counter: Callable[[str], int]) -> None:
