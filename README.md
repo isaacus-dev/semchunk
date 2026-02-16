@@ -86,7 +86,7 @@ def chunkerify(
 
 `chunk_size` is the maximum number of tokens a chunk may contain. It defaults to `None` in which case it will be set to the same value as the tokenizer's `model_max_length` attribute (deducted by the number of tokens returned by attempting to tokenize an empty string) if possible, otherwise a `ValueError` will be raised.
 
-`tokenizer_kwargs` is an optional dictionary of keyword arguments to be passed to the tokenizer or token counter whenever it is called. This can be used to disable the current default behavior of treating any encountered special tokens as if they are normal text when using a `tiktoken` tokenzier.
+`tokenizer_kwargs` is an optional dictionary of keyword arguments to be passed to the tokenizer or token counter whenever it is called. This can be used to disable the current default behavior of treating any encountered special tokens as if they are normal text when using a `tiktoken` or `transformers` tokenzier. This argument defaults to `None`, in which case no additional keyword arguments will be passed to the tokenizer or token counter.
 
 `max_token_chars` is the maximum number of characters a token may contain. It is used to significantly speed up the token counting of long inputs. It defaults to `None` in which case it will either not be used or will, if possible, be set to the number of characters in the longest token in the tokenizer's vocabulary as determined by the `token_byte_values` or `get_vocab` methods.
 

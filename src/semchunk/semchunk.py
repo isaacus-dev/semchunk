@@ -419,8 +419,7 @@ def chunkerify(
 
     Args:
         tokenizer_or_token_counter (str | tiktoken.Encoding | transformers.PreTrainedTokenizer | tokenizers.Tokenizer | Callable[[str], int]): Either: the name of a `tiktoken` or `transformers` tokenizer (with priority given to the former); a tokenizer that possesses an `encode` attribute (e.g., a `tiktoken`, `transformers` or `tokenizers` tokenizer); or a token counter that returns the number of tokens in a input.
-        chunk_size (int, optional): The maximum number of tokens a chunk may contain. Defaults to `None` in which case it will be set to the same value as the tokenizer's `model_max_length` attribute (deducted by the number of tokens returned by attempting to tokenize an empty string) if possible otherwise a `ValueError` will be raised.
-        tokenizer_kwargs (dict, optional): A dictionary of keyword arguments to be passed to the tokenizer or token counter whenever it is called. This can be used to disable the current default behavior of treating any encountered special tokens as if they are normal text when using a `tiktoken` tokenzier.
+        tokenizer_kwargs (dict, optional): A dictionary of keyword arguments to be passed to the tokenizer or token counter whenever it is called. This can be used to disable the current default behavior of treating any encountered special tokens as if they are normal text when using a `tiktoken` or `transformers` tokenzier. Defaults to `None`, in which case no additional keyword arguments will be passed to the tokenizer or token counter.
         max_token_chars (int, optional): The maximum number of characters a token may contain. Used to significantly speed up the token counting of long inputs. Defaults to `None` in which case it will either not be used or will, if possible, be set to the number of characters in the longest token in the tokenizer's vocabulary as determined by the `token_byte_values` or `get_vocab` methods.
         memoize (bool, optional): Whether to memoize the token counter. Defaults to `True`.
         cache_maxsize (int, optional): The maximum number of text-token count pairs that can be stored in the token counter's cache. Defaults to `None`, which makes the cache unbounded. This argument is only used if `memoize` is `True`.
@@ -505,6 +504,7 @@ def chunkerify(
         
         for kwarg, value in {
             "add_special_tokens": False,
+            "split_special_tokens": True,
             "disallowed_special": (),
         }.items():
             if kwarg in tokenizer_parameters and kwarg not in tokenizer_kwargs:
