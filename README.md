@@ -1,22 +1,22 @@
 <div align='center'>
 
-# Semchunk 🧩
+# semchunk 🧩
 
 <a href="https://pypi.org/project/semchunk/"><img src="https://img.shields.io/pypi/v/semchunk" alt="PyPI version" /></a> <a href="https://github.com/isaacus-dev/semchunk/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/isaacus-dev/semchunk/ci.yml?branch=main" alt="Build status"></a> <a href="https://app.codecov.io/gh/isaacus-dev/semchunk"><img src="https://img.shields.io/codecov/c/github/isaacus-dev/semchunk" alt="Code coverage"></a> <a href="https://pypistats.org/packages/semchunk"><img src="https://img.shields.io/pypi/dm/semchunk" alt="Monthly downloads"></a>
 
 </div>
 
-**Semchunk** is a Python library for splitting text into smaller chunks while preserving as much local semantic context as possible.
+**semchunk** is a Python library for splitting text into smaller chunks while preserving as much local semantic context as possible.
 
-Semchunk supports AI-powered chunking, chunk overlapping, and chunk offsets, and works with any tokenizer or token counter, including those from Tiktoken and Transformers.
+semchunk supports AI-powered chunking, chunk overlapping, and chunk offsets, and works with any tokenizer or token counter, including those from Tiktoken and Transformers.
 
-Powered by a novel hierarchical chunking algorithm, Semchunk is both more accurate and faster than naïve approaches (see [How It Works 🔍](https://github.com/isaacus-dev/semchunk#how-it-works-)).
+Powered by a novel hierarchical chunking algorithm, semchunk is both more accurate and faster than naïve approaches (see [How It Works 🔍](https://github.com/isaacus-dev/semchunk#how-it-works-)).
 
-Semchunk is production-ready. It is downloaded millions of times per month and is used in Docling, the Microsoft Intelligence Toolkit, and the Isaacus API.
+semchunk is production-ready. It is downloaded millions of times per month and is used in Docling, the Microsoft Intelligence Toolkit, and the Isaacus API.
 
 ## Setup 📦
 
-Semchunk can be installed with `pip` (or `uv`):
+semchunk can be installed with `pip` (or `uv`):
 
 ```bash
 pip install semchunk
@@ -28,7 +28,7 @@ If you're using AI-powered chunking, you'll also want to install the [Isaacus SD
 pip install isaacus
 ```
 
-Semchunk is also available on `conda-forge`:
+semchunk is also available on `conda-forge`:
 
 ```bash
 conda install conda-forge::semchunk
@@ -36,18 +36,18 @@ conda install conda-forge::semchunk
 conda install -c conda-forge semchunk
 ```
 
-[@dominictarro](https://github.com/dominictarro) maintains a Rust port of Semchunk named [`semchunk-rs`](https://crates.io/crates/semchunk-rs).
+[@dominictarro](https://github.com/dominictarro) maintains a Rust port of semchunk named [`semchunk-rs`](https://crates.io/crates/semchunk-rs).
 
 ## Quickstart 👩‍💻
 
-The code snippet below demonstrates how to chunk text with Semchunk:
+The code snippet below demonstrates how to chunk text with semchunk:
 
 ```python
 import semchunk
 import tiktoken                        # Transformers and Tiktoken are not dependencies,
 from transformers import AutoTokenizer # they're just here for demonstration purposes.
 
-chunk_size = 4 # A low chunk size is used here for demonstration purposes. Keep in mind, Semchunk
+chunk_size = 4 # A low chunk size is used here for demonstration purposes. Keep in mind, semchunk
                # does not know how many special tokens, if any, your tokenizer adds to every input,
                # so you may want to deduct the number of special tokens added from your chunk size.
 text = 'The quick brown fox jumps over the lazy dog.'
@@ -187,7 +187,7 @@ This function returns a list of chunks up to `chunk_size`-tokens-long, with any 
 
 ## How It Works 🔍
 
-Semchunk works by recursively splitting texts until all resulting chunks are less than or equal to a specified chunk size.
+semchunk works by recursively splitting texts until all resulting chunks are less than or equal to a specified chunk size.
 
 In particular, it:
 
@@ -197,7 +197,7 @@ In particular, it:
 4. reattaches any non-whitespace splitters back to the ends of chunks except for the last chunk if doing so does not bring chunks over the chunk size, otherwise adds non-whitespace splitters as their own chunks; and
 5. since version 3.0.0, excludes chunks consisting entirely of whitespace characters.
 
-To ensure that chunks are as semantically meaningful as possible, Semchunk uses the following splitters, in order of precedence:
+To ensure that chunks are as semantically meaningful as possible, semchunk uses the following splitters, in order of precedence:
 
 1. the largest sequence of newlines (`\n`) and/or carriage returns (`\r`);
 2. the largest sequence of tabs;
@@ -208,7 +208,7 @@ To ensure that chunks are as semantically meaningful as possible, Semchunk uses 
 7. word joiners (`/`, `\`, `–`, `&` and `-`); and
 8. all other characters.
 
-Where AI-powered chunking is enabled, Semchunk:
+Where AI-powered chunking is enabled, semchunk:
 
 1. splits text into chunks up to 1,000,000-characters-long using the above algorithm in order to avoid sending excessively long inputs to an enrichment model;
 2. enriches the resulting chunks with the enrichment model, pooling all unique spans extracted from each enriched chunk together;
@@ -221,14 +221,14 @@ Where AI-powered chunking is enabled, Semchunk:
    4. entering into the children of spans where a span exceeds the chunk size; and
    5. falling back to the above algorithm where a span has no children.
 
-If overlapping chunks have been requested, Semchunk also:
+If overlapping chunks have been requested, semchunk also:
 
 1. internally reduces the chunk size to `min(overlap, chunk_size - overlap)` (`overlap` being computed as `floor(chunk_size * overlap)` for relative overlaps and `min(overlap, chunk_size - 1)` for absolute overlaps); and
 2. merges every `floor(original_chunk_size / reduced_chunk_size)` chunks starting from the first chunk and then jumping by `floor((original_chunk_size - overlap) / reduced_chunk_size)` chunks until the last chunk is reached.
 
 ## Citation 📝
 
-If you use Semchunk for research, please cite it as follows:
+If you use semchunk for research, please cite it as follows:
 
 ```bibtex
 @software{butler_semchunk,

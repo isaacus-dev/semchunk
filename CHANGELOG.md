@@ -1,9 +1,9 @@
 ## Changelog 🔄
-All notable changes to Semchunk will be documented here. This project adheres to [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+All notable changes to semchunk will be documented here. This project adheres to [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [4.0.0] - 2026-XX-XX
 ### Added
-- Added a new AI chunking mode to Semchunk that leverages Isaacus enrichment models to hierarchically segment texts.
+- Added a new AI chunking mode to semchunk that leverages Isaacus enrichment models to hierarchically segment texts.
 - Made it possible to chunk [Isaacus Legal Graph Schema (ILGS) Documents](https://docs.isaacus.com/ilgs/introduction) instead of just strings.
 - Added a new `tokenizer_kwargs` argument to `chunkerify()` allowing users to specify custom keyword arguments to their tokenizers and token counters. `tokenizer_kwargs` can be used to override the default behavior of treating any encountered special tokens as if they are normal text when using a `tiktoken` or `transformers` tokenzier.
 - Where a `tiktoken` or `transformers` tokenizer is used, started treating special tokens as normal text instead of, in the case of `tiktoken`, raising an error and, in the case of `transformers`, treating them as special tokens.
@@ -40,7 +40,7 @@ All notable changes to Semchunk will be documented here. This project adheres to
 
 ## [3.2.0] - 2025-03-20
 ### Changed
-- Significantly improved the quality of chunks produced when chunking with low chunk sizes or documents with minimal varying levels of whitespace by adding a new rule to the Semchunk algorithm that prioritizes splitting at the occurrence of single whitespace characters preceded by hierarchically meaningful non-whitespace characters over splitting at all single whitespace characters in general ([#17](https://github.com/isaacus-dev/semchunk/issues/17)).
+- Significantly improved the quality of chunks produced when chunking with low chunk sizes or documents with minimal varying levels of whitespace by adding a new rule to the semchunk algorithm that prioritizes splitting at the occurrence of single whitespace characters preceded by hierarchically meaningful non-whitespace characters over splitting at all single whitespace characters in general ([#17](https://github.com/isaacus-dev/semchunk/issues/17)).
 
 ## [3.1.3] - 2025-03-10
 ### Changed
@@ -71,7 +71,7 @@ All notable changes to Semchunk will be documented here. This project adheres to
 - Significantly sped up chunking very long texts with little to no variation in levels of whitespace used (fixing [#8](https://github.com/isaacus-dev/semchunk/issues/8)) and, in the process, also slightly improved overall performance.
 
 ### Changed
-- Transferred Semchunk to [Isaacus](https://isaacus.com/).
+- Transferred semchunk to [Isaacus](https://isaacus.com/).
 - Began formatting with Ruff.
 
 ## [3.0.1] - 2024-01-10
@@ -87,7 +87,7 @@ All notable changes to Semchunk will be documented here. This project adheres to
 
 ### Changed
 - Began removing chunks comprised entirely of whitespace characters from the output of `chunk()`.
-- Updated Semchunk's description from 'A fast and lightweight Python library for splitting text into semantically meaningful chunks.' and 'A fast, lightweight and easy-to-use Python library for splitting text into semantically meaningful chunks.'.
+- Updated semchunk's description from 'A fast and lightweight Python library for splitting text into semantically meaningful chunks.' and 'A fast, lightweight and easy-to-use Python library for splitting text into semantically meaningful chunks.'.
 
 ### Fixed
 - Fixed a typo in the docstring for the `__call__()` method of the `Chunker` class returned by `chunkerify()` where most of the documentation for the arguments were listed under the section for the method's returns.
@@ -117,7 +117,7 @@ All notable changes to Semchunk will be documented here. This project adheres to
 - Added support for multiprocessing through the `processes` argument passable to chunkers constructed by `chunkerify()`.
 
 ### Removed
-- No longer guaranteed that Semchunk is pure Python.
+- No longer guaranteed that semchunk is pure Python.
 
 ## [1.0.1] - 2024-06-02
 ### Fixed

@@ -253,7 +253,7 @@ def chunk(
 
                 if api_key is None:
                     raise ValueError(
-                        """AI chunking requires the `ISAACUS_API_KEY` environment variable to be set. Obtain an API key at https://platform.isaacus.com/accounts/signup/. Then run `import os; os.environ["ISAACUS_API_KEY"] = "your_api_key"` before calling Semchunk."""
+                        """AI chunking requires the `ISAACUS_API_KEY` environment variable to be set. Obtain an API key at https://platform.isaacus.com/accounts/signup/. Then run `import os; os.environ["ISAACUS_API_KEY"] = "your_api_key"` before calling semchunk."""
                     )
 
                 isaacus_client = isaacus.Isaacus()
