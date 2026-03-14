@@ -231,7 +231,7 @@ If overlapping chunks have been requested, semchunk also:
 If you use semchunk for research, please cite it as follows:
 
 ```bibtex
-@software{butler_semchunk,
+@software{butler2023semchunk,
   author       = {Butler, Umar},
   title        = {semchunk: a Python library for semantic chunking},
   year         = {2023},
