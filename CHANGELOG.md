@@ -9,6 +9,7 @@ All notable changes to semchunk will be documented here. This project adheres to
 - Where a `tiktoken` or `transformers` tokenizer is used, started treating special tokens as normal text instead of, in the case of `tiktoken`, raising an error and, in the case of `transformers`, treating them as special tokens.
 
 ### Changed
+- Demoted asterisks in the hierarchy of splitters from sentence terminators to clause separators to better reflect their typical syntactic function.
 - Dramatically improved performance when handling extremely long sequences of punctuation characters.
 - All arguments to `chunkerify()` except for the first two arguments, `tokenizer_or_token_counter` and `chunk_size`, are now keyword-only arguments.
 - All arguments to `chunk()` except for the first three, `text`, `chunk_size`, and `token_counter`, are now keyword-only arguments.

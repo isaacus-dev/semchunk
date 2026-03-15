@@ -202,8 +202,8 @@ To ensure that chunks are as semantically meaningful as possible, semchunk uses 
 1. the largest sequence of newlines (`\n`) and/or carriage returns (`\r`);
 2. the largest sequence of tabs;
 3. the largest sequence of whitespace characters (as defined by regex's `\s` character class) or, since version 3.2.0, if the largest sequence of whitespace characters is only a single character and there exist whitespace characters preceded by any of the semantically meaningful non-whitespace characters listed below (in the same order of precedence), then only those specific whitespace characters;
-4. sentence terminators (`.`, `?`, `!` and `*`);
-5. clause separators (`;`, `,`, `(`, `)`, `[`, `]`, `“`, `”`, `‘`, `’`, `'`, `"` and `` ` ``);
+4. sentence terminators (`.`, `?`, and `!`);
+5. clause separators (`;`, `,`, `*`, `(`, `)`, `[`, `]`, `“`, `”`, `‘`, `’`, `'`, `"`, `` ` ``);
 6. sentence interrupters (`:`, `—` and `…`);
 7. word joiners (`/`, `\`, `–`, `&` and `-`); and
 8. all other characters.

@@ -41,10 +41,10 @@ _NON_WHITESPACE_SEMANTIC_SPLITTERS = (
     ".",
     "?",
     "!",
-    "*",
     # Clause separators.
     ";",
     ",",
+    "*",
     "(",
     ")",
     "[",
