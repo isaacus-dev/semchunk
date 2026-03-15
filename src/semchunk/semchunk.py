@@ -36,7 +36,7 @@ if TYPE_CHECKING:
 _memoized_token_counters = {}
 """A map of token counters to their memoized versions."""
 
-_NON_WHITESPACE_SEMANTIC_SPLITTERS = (
+_NON_WHITESPACE_STRUCTURAL_SPLITTERS = (
     # Sentence terminators.
     ".",
     "?",
@@ -67,23 +67,23 @@ _NON_WHITESPACE_SEMANTIC_SPLITTERS = (
     "&",
     "-",
 )
-"""A tuple of semantically meaningful non-whitespace splitters that may be used to chunk texts, ordered from most desirable to least desirable."""
+"""A tuple of structurally meaningful non-whitespace splitters that may be used to chunk texts, ordered from most desirable to least desirable."""
 
 _REGEX_ESCAPED_NON_WHITESPACE_SEMANTIC_SPLITTERS = tuple(
-    re.escape(splitter) for splitter in _NON_WHITESPACE_SEMANTIC_SPLITTERS
+    re.escape(splitter) for splitter in _NON_WHITESPACE_STRUCTURAL_SPLITTERS
 )
 
 
 def _split_text(text: str) -> tuple[str, bool, list[str]]:
-    """Split text using the most semantically meaningful splitter possible."""
+    """Split text using the most structurally meaningful splitter possible."""
 
     splitter_is_whitespace = True
 
     # Try splitting at, in order of most desirable to least desirable:
-    # - The largest sequence of newlines and/or carriage returns;
-    # - The largest sequence of tabs;
-    # - The largest sequence of whitespace characters or, if the largest such sequence is only a single character and there exists a whitespace character preceded by a semantically meaningful non-whitespace splitter, then that whitespace character;
-    # - A semantically meaningful non-whitespace splitter.
+    # - the largest sequence of newlines and/or carriage returns;
+    # - the largest sequence of tabs;
+    # - the largest sequence of whitespace characters or, if the largest such sequence is only a single character and there exists a whitespace character preceded by a structurally meaningful non-whitespace splitter, then that whitespace character; and
+    # - a structurally meaningful non-whitespace splitter.
     if "\n" in text or "\r" in text:
         splitter = max(re.findall(r"[\r\n]+", text), key=len)
 
@@ -93,7 +93,7 @@ def _split_text(text: str) -> tuple[str, bool, list[str]]:
     elif re.search(r"\s", text):
         splitter = max(re.findall(r"\s+", text), key=len)
 
-        # If the splitter is only a single character, see if we can target whitespace characters that are preceded by semantically meaningful non-whitespace splitters to avoid splitting in the middle of sentences.
+        # If the splitter is only a single character, see if we can target whitespace characters that are preceded by structurally meaningful non-whitespace splitters to avoid splitting in the middle of sentences.
         if len(splitter) == 1:
             for escaped_preceder in _REGEX_ESCAPED_NON_WHITESPACE_SEMANTIC_SPLITTERS:
                 if whitespace_preceded_by_preceder := re.search(rf"{escaped_preceder}(\s)", text):
@@ -107,13 +107,13 @@ def _split_text(text: str) -> tuple[str, bool, list[str]]:
                     )
 
     else:
-        # Identify the most desirable semantically meaningful non-whitespace splitter present in the text.
-        for splitter in _NON_WHITESPACE_SEMANTIC_SPLITTERS:
+        # Identify the most desirable structurally meaningful non-whitespace splitter present in the text.
+        for splitter in _NON_WHITESPACE_STRUCTURAL_SPLITTERS:
             if splitter in text:
                 splitter_is_whitespace = False
                 break
 
-        # If no semantically meaningful splitter is present in the text, return an empty string as the splitter and the text as a list of characters.
+        # If no structurally meaningful splitter is present in the text, return an empty string as the splitter and the text as a list of characters.
         else:  # NOTE This code block will only be executed if the for loop completes without breaking.
             return "", splitter_is_whitespace, list(text)
 
@@ -489,7 +489,7 @@ def chunk(
     # endregion
 
     # region ### Chunking ###
-    # Split the text using the most semantically meaningful splitter possible.
+    # Split the text using the most structurally meaningful splitter possible.
     splitter, splitter_is_whitespace, splits = _split_text(text)
 
     offsets: list = []

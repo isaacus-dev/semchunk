@@ -191,7 +191,7 @@ semchunk works by recursively splitting texts until all resulting chunks are les
 
 In particular, it:
 
-1. splits text using the most semantically meaningful splitter possible;
+1. splits text using the most structurally meaningful splitter possible;
 2. recursively splits the resulting chunks until a set of chunks less than or equal to the specified chunk size is produced;
 3. merges any chunks that are under the chunk size back together until the chunk size is reached;
 4. reattaches any non-whitespace splitters back to the ends of chunks except for the last chunk if doing so does not bring chunks over the chunk size, otherwise adds non-whitespace splitters as their own chunks; and
@@ -201,7 +201,7 @@ To ensure that chunks are as semantically meaningful as possible, semchunk uses 
 
 1. the largest sequence of newlines (`\n`) and/or carriage returns (`\r`);
 2. the largest sequence of tabs;
-3. the largest sequence of whitespace characters (as defined by regex's `\s` character class) or, since version 3.2.0, if the largest sequence of whitespace characters is only a single character and there exist whitespace characters preceded by any of the semantically meaningful non-whitespace characters listed below (in the same order of precedence), then only those specific whitespace characters;
+3. the largest sequence of whitespace characters (as defined by regex's `\s` character class) or, since version 3.2.0, if the largest sequence of whitespace characters is only a single character and there exist whitespace characters preceded by any of the structurally meaningful non-whitespace characters listed below (in the same order of precedence), then only those specific whitespace characters;
 4. sentence terminators (`.`, `?`, and `!`);
 5. clause separators (`;`, `,`, `*`, `(`, `)`, `[`, `]`, `“`, `”`, `‘`, `’`, `'`, `"`, `` ` ``);
 6. sentence interrupters (`:`, `—` and `…`);
