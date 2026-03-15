@@ -44,7 +44,6 @@ _NON_WHITESPACE_STRUCTURAL_SPLITTERS = (
     # Clause separators.
     ";",
     ",",
-    "*",
     "(",
     ")",
     "[",
@@ -56,6 +55,7 @@ _NON_WHITESPACE_STRUCTURAL_SPLITTERS = (
     "'",
     '"',
     "`",
+    "*",
     # Sentence interrupters.
     ":",
     "—",
