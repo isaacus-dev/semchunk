@@ -1,7 +1,7 @@
 ## Changelog 🔄
 All notable changes to semchunk will be documented here. This project adheres to [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [4.0.0] - 2026-XX-XX
+## [4.0.0] - 2026-03-23
 ### Added
 - Added a new AI chunking mode to semchunk that leverages Isaacus enrichment models to hierarchically segment texts.
 - Made it possible to chunk [Isaacus Legal Graph Schema (ILGS) Documents](https://docs.isaacus.com/ilgs/introduction) instead of just strings.
