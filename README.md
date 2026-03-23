@@ -10,7 +10,7 @@
 
 semchunk supports AI-powered chunking, chunk overlapping, and chunk offsets, and works with any tokenizer or token counter, including those from Tiktoken and Transformers.
 
-Powered by a novel hierarchical chunking algorithm, semchunk is both more accurate and faster than naïve approaches (see [How It Works 🔍](https://github.com/isaacus-dev/semchunk#how-it-works-)).
+Powered by a novel hierarchical chunking algorithm, semchunk delivers 15% better RAG performance than its closest competitors (see [Benchmarks 📊](https://github.com/isaacus-dev/semchunk#benchmarks-)).
 
 semchunk is production-ready. It is downloaded millions of times per month and is used in Docling, the Microsoft Intelligence Toolkit, and the Isaacus API.
 
@@ -225,6 +225,13 @@ If overlapping chunks have been requested, semchunk also:
 
 1. internally reduces the chunk size to `min(overlap, chunk_size - overlap)` (`overlap` being computed as `floor(chunk_size * overlap)` for relative overlaps and `min(overlap, chunk_size - 1)` for absolute overlaps); and
 2. merges every `floor(original_chunk_size / reduced_chunk_size)` chunks starting from the first chunk and then jumping by `floor((original_chunk_size - overlap) / reduced_chunk_size)` chunks until the last chunk is reached.
+
+## Benchmarks 📊
+On [Legal RAG QA](https://huggingface.co/datasets/isaacus/legal-rag-qa), semchunk's AI chunking mode achieves the highest RAG correctness score of 37.7%, followed by semchunk's non-AI chunking mode at 35.5%. In comparison, LangChain's recursive chunker achieves correctness of 34.8% while fixed-size chunking achieves 33.3% correctness. Chonkie's semantic and recursive chunkers achieve the lowest correctness score of 32.6%. That is 15% lower than semchunk's AI chunking mode and 8% lower than semchunk's non-AI chunking mode.
+
+<a href="https://isaacus.com/blog/introducing-ai-chunking-to-semchunk"><img src="https://media.isaacus.com/posts/semchunk-4.0/Chunking%20impact%20on%20RAG%20correctness.png" width="768px" /></a>
+
+A full write up of our evaluation methodology and findings may be found on our [blog](https://isaacus.com/blog/introducing-ai-chunking-to-semchunk).
 
 ## Citation 📝
 
