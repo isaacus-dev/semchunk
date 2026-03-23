@@ -7,6 +7,7 @@ All notable changes to semchunk will be documented here. This project adheres to
 - Made it possible to chunk [Isaacus Legal Graph Schema (ILGS) Documents](https://docs.isaacus.com/ilgs/introduction) instead of just strings.
 - Added a new `tokenizer_kwargs` argument to `chunkerify()` allowing users to specify custom keyword arguments to their tokenizers and token counters. `tokenizer_kwargs` can be used to override the default behavior of treating any encountered special tokens as if they are normal text when using a `tiktoken` or `transformers` tokenzier.
 - Where a `tiktoken` or `transformers` tokenizer is used, started treating special tokens as normal text instead of, in the case of `tiktoken`, raising an error and, in the case of `transformers`, treating them as special tokens.
+- Added support for Python 3.14.
 
 ### Changed
 - Demoted asterisks in the hierarchy of splitters from sentence terminators to clause separators to better reflect their typical syntactic function.
@@ -15,6 +16,9 @@ All notable changes to semchunk will be documented here. This project adheres to
 - All arguments to `chunk()` except for the first three, `text`, `chunk_size`, and `token_counter`, are now keyword-only arguments.
 - Significantly improved performance in cases where `merge_splits()` was the biggest bottleneck by switching from joining splits with splitters to indexing into the original text.
 - Slightly sped up `merge_splits()` by switching to the standard library's `bisect_left()` function which is now faster than the previous implementation.
+
+### Removed
+- Dropped support for Python 3.9.
 
 ## [3.2.5] - 2025-10-28
 ### Changed
