@@ -163,7 +163,6 @@ dev = [
     "pytest-cov>=6.1.1",
     "semantic-text-splitter>=0.27.0",
     "tiktoken>=0.9.0",
-    "tqdm>=4.67.1",
     "transformers>=4.52.4",
     "twine>=6.1.0",
 ]
