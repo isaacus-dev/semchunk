@@ -56,6 +56,20 @@ Documentation = "https://github.com/isaacus-dev/semchunk/blob/main/README.md"
 Issues = "https://github.com/isaacus-dev/semchunk/issues"
 Source = "https://github.com/isaacus-dev/semchunk"
 
+[project.optional-dependencies]
+ai = [
+    "isaacus>=0.19.0",
+]
+tokenizers = [
+    "tiktoken>=0.9.0",
+    "transformers>=4.52.4",
+]
+all = [
+    "isaacus>=0.19.0",
+    "tiktoken>=0.9.0",
+    "transformers>=4.52.4",
+]
+
 [tool.hatch.build.targets.sdist]
 only-include = ['src/semchunk/__init__.py', 'src/semchunk/py.typed', 'src/semchunk/semchunk.py', 'pyproject.toml', 'README.md', 'LICENCE', 'CHANGELOG.md', 'tests/bench.py', 'tests/test_semchunk.py', '.github/workflows/ci.yml', 'tests/helpers.py']
 
@@ -151,19 +165,21 @@ skip-magic-trailing-comma = false
 line-ending = "auto"
 
 [dependency-groups]
+test = [
+    "nltk>=3.9.1",
+    "pytest>=8.4.0",
+    "pytest-cov>=6.1.1",
+    "tiktoken>=0.9.0",
+    "transformers>=4.52.4",
+]
 dev = [
+    {include-group = "test"},
     "build>=1.2.2.post1",
     "datasets>=4.5.0",
     "hatch>=1.14.1",
     "ipykernel>=6.31.0",
     "isaacus>=0.19.0",
     "isort>=6.1.0",
-    "nltk>=3.9.1",
-    "pytest>=8.4.0",
-    "pytest-cov>=6.1.1",
     "semantic-text-splitter>=0.27.0",
-    "tiktoken>=0.9.0",
-    "tqdm>=4.67.1",
-    "transformers>=4.52.4",
     "twine>=6.1.0",
 ]
