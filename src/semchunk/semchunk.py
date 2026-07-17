@@ -227,6 +227,10 @@ def chunk(
     ilgs_doc = None
 
     if is_first_call := not _recursion_depth:
+        # A non-positive chunk_size fits no token, so the recursion never terminates.
+        if chunk_size < 1:
+            raise ValueError(f"chunk_size must be a positive integer, not {chunk_size!r}.")
+
         # Memoize the token counter if desired.
         if memoize:
             token_counter = _memoized_token_counters.setdefault(token_counter, lru_cache(cache_maxsize)(token_counter))

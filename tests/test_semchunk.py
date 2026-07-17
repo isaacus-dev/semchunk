@@ -199,5 +199,27 @@ def test_semchunk() -> None:
     # Test chunking whitespace to ensure no errors are raised.
     semchunk.chunk('\n\n', 512, lambda *args: 0)
 
+def test_non_positive_chunk_size() -> None:
+    """Test that a non-positive chunk size raises a clear ``ValueError`` rather than recursing until a ``RecursionError``."""
+    token_counter = len
+
+    for bad_size in (0, -1, -100):
+        # Directly via `chunk`.
+        try:
+            semchunk.chunk('hello world', bad_size, token_counter)
+        except ValueError:
+            pass
+        else:
+            raise AssertionError(f'chunk() with chunk_size={bad_size!r} did not raise ValueError')
+
+        # And via a `chunkerify`-built chunker, which defers to `chunk`.
+        try:
+            semchunk.chunkerify(token_counter, bad_size)('hello world')
+        except ValueError:
+            pass
+        else:
+            raise AssertionError(f'chunkerify() with chunk_size={bad_size!r} did not raise ValueError')
+
 if __name__ == '__main__':
     test_semchunk()
+    test_non_positive_chunk_size()
