@@ -201,3 +201,18 @@ def test_semchunk() -> None:
 
 if __name__ == '__main__':
     test_semchunk()
+
+def test_overlap_never_exceeds_chunk_size() -> None:
+    """Overlapped chunks must not exceed ``chunk_size`` when separators count as tokens.
+
+    Merging subchunks by offset re-includes the whitespace stripped between them; with a
+    whitespace-significant counter (``len``) that can push a chunk over ``chunk_size``.
+    """
+    text, chunk_size = "aa  bb  cc  dd", 4
+    chunks, offsets = semchunk.chunk(text, chunk_size, len, offsets=True, overlap=0.5, memoize=False)
+
+    # Every chunk stays within the documented maximum...
+    for chunk in chunks:
+        assert len(chunk) <= chunk_size, f"{chunk!r} has {len(chunk)} tokens > chunk_size {chunk_size}"
+    # ...and the offsets still reconstruct the chunks (no content dropped).
+    assert chunks == [text[start:end] for start, end in offsets]

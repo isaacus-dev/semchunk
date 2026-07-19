@@ -487,13 +487,26 @@ def chunk(
                 unoverlapped_chunk_size / subchunk_size
             )  # NOTE `math.ceil` would cause overlaps to be missed.
 
-            offsets = [
-                (
-                    suboffsets[(start := i * subchunk_stride)][0],
-                    suboffsets[min(start + subchunks_per_chunk, num_subchunks) - 1][1],
-                )
-                for i in range(max(1, math.ceil((num_subchunks - subchunks_per_chunk) / subchunk_stride) + 1))
-            ]
+            offsets = []
+            i = 0
+
+            while True:
+                # Grow the window up to `subchunks_per_chunk` subchunks, then shrink it if the
+                # whitespace reintroduced between subchunks (stripped when the subchunks were
+                # formed but re-spanned here) would push the merged chunk over `chunk_size`.
+                end_i = min(i + subchunks_per_chunk, num_subchunks) - 1
+
+                while end_i > i and token_counter(text[suboffsets[i][0] : suboffsets[end_i][1]]) > chunk_size:
+                    end_i -= 1
+
+                offsets.append((suboffsets[i][0], suboffsets[end_i][1]))
+
+                if end_i >= num_subchunks - 1:
+                    break
+
+                # Advance by the stride but never past the last included subchunk so no
+                # subchunk is ever skipped (which would drop content).
+                i = min(i + subchunk_stride, end_i + 1)
 
         # Materialize chunks from offsets.
         chunks = [text[start:end] for start, end in offsets]
@@ -611,13 +624,26 @@ def chunk(
                 unoverlapped_chunk_size / subchunk_size
             )  # NOTE `math.ceil` would cause overlaps to be missed.
 
-            offsets = [
-                (
-                    suboffsets[(start := i * subchunk_stride)][0],
-                    suboffsets[min(start + subchunks_per_chunk, num_subchunks) - 1][1],
-                )
-                for i in range(max(1, math.ceil((num_subchunks - subchunks_per_chunk) / subchunk_stride) + 1))
-            ]
+            offsets = []
+            i = 0
+
+            while True:
+                # Grow the window up to `subchunks_per_chunk` subchunks, then shrink it if the
+                # whitespace reintroduced between subchunks (stripped when the subchunks were
+                # formed but re-spanned here) would push the merged chunk over `chunk_size`.
+                end_i = min(i + subchunks_per_chunk, num_subchunks) - 1
+
+                while end_i > i and token_counter(text[suboffsets[i][0] : suboffsets[end_i][1]]) > chunk_size:
+                    end_i -= 1
+
+                offsets.append((suboffsets[i][0], suboffsets[end_i][1]))
+
+                if end_i >= num_subchunks - 1:
+                    break
+
+                # Advance by the stride but never past the last included subchunk so no
+                # subchunk is ever skipped (which would drop content).
+                i = min(i + subchunk_stride, end_i + 1)
 
             chunks = [text[start:end] for start, end in offsets]
 
