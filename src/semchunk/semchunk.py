@@ -761,6 +761,9 @@ class Chunker:
                 chunks_and_offsets = list(chunked_texts)
 
         if offsets:
+            if not chunks_and_offsets:
+                return [], []
+
             chunks, offsets_ = zip(*chunks_and_offsets)
 
             return list(chunks), list(offsets_)
