@@ -33,7 +33,7 @@ if TYPE_CHECKING:
 
 
 _memoized_token_counters = {}
-"""A map of token counters to their memoized versions."""
+"""A map of token counters and cache sizes to their memoized versions."""
 
 _NON_WHITESPACE_STRUCTURAL_SPLITTERS = (
     # Sentence terminators.
@@ -229,7 +229,9 @@ def chunk(
     if is_first_call := not _recursion_depth:
         # Memoize the token counter if desired.
         if memoize:
-            token_counter = _memoized_token_counters.setdefault(token_counter, lru_cache(cache_maxsize)(token_counter))
+            token_counter = _memoized_token_counters.setdefault(
+                (token_counter, cache_maxsize), lru_cache(cache_maxsize)(token_counter)
+            )
 
         # Reduce the effective chunk size if overlapping is enabled.
         if overlap:
@@ -918,7 +920,9 @@ def chunkerify(
 
     # Memoize the token counter if necessary.
     if memoize:
-        token_counter = _memoized_token_counters.setdefault(token_counter, lru_cache(cache_maxsize)(token_counter))
+        token_counter = _memoized_token_counters.setdefault(
+            (token_counter, cache_maxsize), lru_cache(cache_maxsize)(token_counter)
+        )
 
     # Construct and return the chunker.
     return Chunker(
