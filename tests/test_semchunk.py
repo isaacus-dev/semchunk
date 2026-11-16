@@ -199,5 +199,27 @@ def test_semchunk() -> None:
     # Test chunking whitespace to ensure no errors are raised.
     semchunk.chunk('\n\n', 512, lambda *args: 0)
 
+DANDA_TEST_CHUNK_SIZE = 9
+DANDA_TEST_OUTPUT_CHUNKS = {
+    # Hindi, Marathi and Bengali end sentences with the danda (।) and the double danda (॥).
+    'hindi': ['भारत एक विशाल देश है।', 'इसकी राजधानी नई दिल्ली है।', 'गंगा एक पवित्र नदी है।', 'किसान खेतों में मेहनत करते हैं।', 'वे सबके लिए अनाज उगाते हैं।'],
+    'marathi': ['महाराष्ट्र हे भारतातील एक मोठे राज्य आहे।', 'मुंबई ही त्याची राजधानी आहे।', 'पुणे हे शिक्षणाचे माहेरघर आहे। शेतकरी शेतात कष्ट करतात।', 'ते सर्वांसाठी धान्य पिकवतात॥'],
+    'bengali': ['বাংলা একটি সুন্দর ভাষা। কলকাতা পশ্চিমবঙ্গের রাজধানী।', 'এখানে অনেক মানুষ থাকে। রবীন্দ্রনাথ ঠাকুর নোবেল পুরস্কার পেয়েছিলেন।', 'তিনি একজন কবি ছিলেন।'],
+    'english': ['India is a large country.', 'Its capital is New Delhi.', 'The Ganga is a holy river.', 'Farmers work hard in the fields.', 'They grow grain for everyone.'],
+}
+
+def test_danda_sentence_terminators() -> None:
+    """Test that chunks of Indic-script text end at the danda rather than in the middle of a sentence."""
+
+    word_counter = lambda text: len(text.split())
+
+    for language, expected_chunks in DANDA_TEST_OUTPUT_CHUNKS.items():
+        text = ' '.join(expected_chunks)
+        chunks, offsets = semchunk.chunk(text, DANDA_TEST_CHUNK_SIZE, word_counter, offsets = True)
+
+        assert chunks == expected_chunks, language
+        assert [text[start:end] for start, end in offsets] == chunks, language
+
 if __name__ == '__main__':
     test_semchunk()
+    test_danda_sentence_terminators()

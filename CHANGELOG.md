@@ -1,6 +1,10 @@
 ## Changelog 🔄
 All notable changes to semchunk will be documented here. This project adheres to [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+### Fixed
+- Fixed chunks of Hindi, Marathi, Bengali and other Indic-script text being split in the middle of sentences by treating the danda (`।`) and double danda (`॥`) as sentence terminators.
+
 ## [4.1.1] - 2026-06-13
 ### Changed
 - Sped up chunking, particularly of real-world documents at typical chunk sizes, by only ever materializing the comparatively rare multi-character whitespace runs when identifying the most structurally meaningful splitter, sparing `_split_text()` from materializing the far more numerous single-character runs (such as the single spaces between words) that can never be the longest run unless no longer run exists.
@@ -196,6 +200,7 @@ All notable changes to semchunk will be documented here. This project adheres to
 ### Added
 - Added the `chunk()` function, which splits text into semantically meaningful chunks of a specified size as determined by a provided token counter.
 
+[Unreleased]: https://github.com/isaacus-dev/semchunk/compare/v4.1.1...HEAD
 [4.1.1]: https://github.com/isaacus-dev/semchunk/compare/v4.1.0...v4.1.1
 [4.1.0]: https://github.com/isaacus-dev/semchunk/compare/v4.0.0...v4.1.0
 [4.0.0]: https://github.com/isaacus-dev/semchunk/compare/v3.2.5...v4.0.0

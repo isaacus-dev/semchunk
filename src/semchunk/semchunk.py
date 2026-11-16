@@ -40,6 +40,8 @@ _NON_WHITESPACE_STRUCTURAL_SPLITTERS = (
     ".",
     "?",
     "!",
+    "।",  # Danda (U+0964), which ends sentences in Hindi, Marathi, Bengali and other Indic scripts.
+    "॥",  # Double danda (U+0965).
     # Clause separators.
     ";",
     ",",
