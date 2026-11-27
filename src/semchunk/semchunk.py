@@ -227,6 +227,10 @@ def chunk(
     ilgs_doc = None
 
     if is_first_call := not _recursion_depth:
+        # Reject chunk sizes that can never hold a token, which would otherwise recurse until the interpreter's recursion limit.
+        if chunk_size < 1:
+            raise ValueError(f'`chunk_size` must be a positive integer, not {chunk_size!r}.')
+
         # Memoize the token counter if desired.
         if memoize:
             token_counter = _memoized_token_counters.setdefault(token_counter, lru_cache(cache_maxsize)(token_counter))
@@ -923,4 +927,4 @@ def chunkerify(
     # Construct and return the chunker.
     return Chunker(
         chunk_size=chunk_size, token_counter=token_counter, chunking_model=chunking_model, isaacus_client=isaacus_client
-    )
+            )
