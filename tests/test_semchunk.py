@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import math
 
+import pytest
 import semchunk
 
 import tiktoken
@@ -201,3 +202,17 @@ def test_semchunk() -> None:
 
 if __name__ == '__main__':
     test_semchunk()
+
+
+def test_invalid_chunk_size() -> None:
+    """Test that chunk sizes below one are rejected with a clear error."""
+
+    for chunk_size in (0, -1):
+        with pytest.raises(ValueError, match='chunk_size'):
+            semchunk.chunk('a b', chunk_size, len)
+
+        with pytest.raises(ValueError, match='chunk_size'):
+            semchunk.chunkerify(len, chunk_size)('a b')
+
+    # A chunk size of one is the smallest valid chunk size.
+    assert semchunk.chunk('a b', 1, len) == ['a', 'b']
