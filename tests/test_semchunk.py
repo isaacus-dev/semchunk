@@ -200,10 +200,6 @@ def test_semchunk() -> None:
     # Test chunking whitespace to ensure no errors are raised.
     semchunk.chunk('\n\n', 512, lambda *args: 0)
 
-if __name__ == '__main__':
-    test_semchunk()
-
-
 def test_invalid_chunk_size() -> None:
     """Test that chunk sizes below one are rejected with a clear error."""
 
@@ -216,3 +212,7 @@ def test_invalid_chunk_size() -> None:
 
     # A chunk size of one is the smallest valid chunk size.
     assert semchunk.chunk('a b', 1, len) == ['a', 'b']
+
+
+if __name__ == '__main__':
+    test_semchunk()
